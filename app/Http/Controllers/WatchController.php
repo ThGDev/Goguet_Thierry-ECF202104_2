@@ -10,16 +10,20 @@ class WatchController extends Controller
 {
     public function listWatchlists()
     {
-        // Modèle
-        $userID = Auth::id();
+        if(Auth::check()){
+            // Modèle
+            $userID = Auth::id();
 
-        $watchlists = DB::table('watchlists')
-                    ->join('animes', 'watchlists.anime_id', '=', 'animes.id')
-                    ->join('users', 'watchlists.user_id', '=', 'users.id')
-                    ->where('user_id', '=', $userID)
-                    ->get();
+            $watchlists = DB::table('watchlists')
+                        ->join('animes', 'watchlists.anime_id', '=', 'animes.id')
+                        ->join('users', 'watchlists.user_id', '=', 'users.id')
+                        ->where('user_id', '=', $userID)
+                        ->get();
 
-        return view('watchlist', ["animes" => $watchlists]);
+            return view('watchlist', ["animes" => $watchlists]);
+        }
+
+        return redirect('/');
     }
 
     public function addInWatchlist($id)
