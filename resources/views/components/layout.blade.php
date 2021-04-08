@@ -14,7 +14,9 @@
         <nav>
           <a class="logo" href="/">Anime Ranking</a>
           <a href="/top">Top</a>
+          @auth
           <a href="/watchlist">Ma watchlist</a>
+          @endauth
         </nav>
         <nav>
           @auth
@@ -34,5 +36,6 @@
     <main>
       {{ $slot }}
     </main>
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
   </body>
 </html>

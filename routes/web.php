@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Http\Controllers\AnimeController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\WatchController;
+use App\Http\Controllers\TopController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,60 +20,73 @@ use App\Models\User;
 | contains the "web" middleware group. Now create something great!
 |
 */
+/*
+/ -------------- LES ANIMES
+*/
+// Liste les animes
+Route::get('/', [AnimeController::class, 'listAnimes']);
 
-Route::get('/', function () {
-  $animes = DB::select("SELECT * FROM animes");
-  return view('welcome', ["animes" => $animes]);
-});
+// Affiche la page d'un anime selon son ID passé en paramètre de l'URL
+Route::get('/anime/{id}', [AnimeController::class, 'viewAnimeAndReviews']);
 
-Route::get('/anime/{id}', function ($id) {
-  $anime = DB::select("SELECT * FROM animes WHERE id = ?", [$id])[0];
-  return view('anime', ["anime" => $anime]);
-});
+/*
+/ -------------- LES REVIEWS
+*/
 
-Route::get('/anime/{id}/new_review', function ($id) {
-  return view('new_review');
-});
+// Contrôle si un visiteur est connecté ou non pour laisser une critique
+Route::get('/anime/{id}/add_review', [AuthController::class, 'addReviewIfConnected']);
 
-Route::get('/login', function () {
-  return view('login');
-});
+// Pour aller sur la page de rédaction de critique
+Route::get('/anime/{id}/new_review', [ReviewController::class, 'nameOfAnime']);
 
-Route::post('/login', function (Request $request) {
-  $validated = $request->validate([
-    "username" => "required",
-    "password" => "required",
-  ]);
-  if (Auth::attempt($validated)) {
-    return redirect()->intended('/');
-  }
-  return back()->withErrors([
-    'username' => 'The provided credentials do not match our records.',
-  ]);
-});
+// Pour enregistrer sa critique
+Route::post('/anime/{id}/record_review', [ReviewController::class, 'addReview']);
 
-Route::get('/signup', function () {
-  return view('signup');
-});
+/*
+/ -------------- LES WATCHLISTS
+*/
 
-Route::post('signup', function (Request $request) {
-  $validated = $request->validate([
-    "username" => "required",
-    "password" => "required",
-    "password_confirmation" => "required|same:password"
-  ]);
-  $user = new User();
-  $user->username = $validated["username"];
-  $user->password = Hash::make($validated["password"]);
-  $user->save();
-  Auth::login($user);
+// Contrôle si un visiteur est connecté ou non pour mettre un anime dans sa watchlist
+Route::get('/anime/{id}/add_to_watch_list', [AuthController::class, 'addToWatchlistIfConnected']);
 
-  return redirect('/');
-});
+// Pour enregistrer un anime dans sa watchlist
+// Route::post('/anime/{id}/new_anime_in_wl', [WatchController::class, 'addInWatchlist']);
+Route::any('/insert_to_watch_list/{id}', [WatchController::class, 'addInWatchlist']);
 
-Route::post('signout', function (Request $request) {
-  Auth::logout();
-  $request->session()->invalidate();
-  $request->session()->regenerateToken();
-  return redirect('/');
-});
+// Pour aller sur la page des watchlists
+Route::get('/watchlist/', [WatchController::class, 'listWatchlists']);
+
+// Pour supprimer un anime de la watchlist
+Route::get('/watchlist/delete/{id}', [WatchController::class, 'deleteAnimeFromWatchlist']);
+
+/*
+/ -------------- LOGIN
+*/
+
+// Accéder à la page login et afficher le formulaire
+Route::get('/login', [AuthController::class, 'pageLogin']);
+
+// Valider le formulaire de login et se connecter
+Route::post('/login', [AuthController::class, 'loginIn']);
+
+/*
+/ -------------- SIGNUP
+*/
+
+// Accéder à la page signup et afficher le formulaire
+Route::get('/signup', [AuthController::class, 'pageSignup']);
+
+// Valider le formulaire de signup et se connecter
+Route::post('/signup', [AuthController::class, 'signInUp']);
+
+/*
+/ -------------- SIGNOUT
+*/
+
+Route::post('/signout', [AuthController::class, 'signout']);
+
+/*
+/ -------------- TOP
+*/
+
+Route::get('/top', [TopController::class, 'listTop']);

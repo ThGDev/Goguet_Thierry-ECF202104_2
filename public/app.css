@@ -152,7 +152,7 @@ main {
     display: flex;
     margin: -1rem;
 }
-.anime .actions > * {
+.anime .actions > *, .pagewatch .actions .pagewatch--button > *, .top .actions .top--button > * {
     margin: 1rem;
 }
 
@@ -178,7 +178,7 @@ article > * + * {
     line-height: 1.2;
 }
 
-.anime img {
+.anime img, .pagewatch img {
     border: 2px solid;
     max-width: 10rem;
     margin-right: 4rem;
@@ -196,6 +196,9 @@ article > * + * {
 article.anime {
     max-width: 65ch;
     margin: 0 auto;
+}
+article.review {
+    margin-top: 5rem;
 }
 
 .signup h1,
@@ -227,4 +230,103 @@ input {
 .login {
     display: grid;
     place-items: center;
+}
+
+.rating-note {
+    border: 2px solid red;
+    text-align: center;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    box-shadow: 0.25rem 0.25rem 0 red;
+    background: white;
+    color: red;
+    font-size: 1.2rem;
+}
+
+.critique {
+    border: 2px solid;
+    padding: 1rem;
+    box-shadow: 0.25rem 0.25rem 0 black;
+    background: white;
+    margin-bottom: 1.5rem;
+}
+
+.critique-comment {
+    border-top: 1px dashed;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    font-style: italic;
+}
+
+.moyenne {
+    font-size: 2rem;
+    color: red;
+}
+
+.red-error {
+    color: red;
+    position: absolute;
+    bottom: 90px;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.pagereview--form > form > textarea {
+    width: 100%;
+}
+
+.pagewatch--content, .top--content {
+    display: flex;
+    align-items: center;
+}
+.pagewatch--content > img, .top--content > img {
+    width: 100px;
+    margin-right: 20px;
+}
+
+.top--content {
+    border: 2px solid;
+    padding: 0.5rem 1rem;
+    box-shadow: 0.25rem 0.25rem 0 black;
+    background: white;
+    margin-bottom: 1rem;
+}
+
+.top--content .top--rating {
+    width: 6rem;
+    height: 4rem;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: red;
+    text-align: center;
+    padding: 0.2rem 1rem;
+    margin-right: 1rem;
+    border: 2px solid black;
+    border-radius: 50%;
+    box-shadow: 0.25rem 0.25rem 0 black;
+    background: white;
+}
+.top--content .top--rating > span {
+    color: black;
+    border-top: 2px solid black;
+    font-size: 1rem;
+}
+
+.red {
+    color: red;
+}
+
+li.rate-plus, li.rate-minor, li.rate-bof {
+    list-style: none;
+}
+li.rate-plus::before {
+    content: "\1F44D";
+}
+li.rate-minor::before {
+    content: "\1F44E";
+}
+li.rate-bof::before {
+    content: "\3030";
 }
