@@ -59,7 +59,7 @@
           @foreach ($memberRatings as $memberRating)
             @if ($memberRating->anime_id === $anime->anime_id)
               @if ($memberRating->rating > 5)
-                "👍 @elseif ($memberRating->rating == 5)"〰️ @else"👎 @endif<strong>{{ $memberRating->username }}</strong> a donné la note de <strong class='red'>{{ $memberRating->rating }}</strong> à <em>{{ $anime->title }}</em>&nbsp;", 
+                "&#x1F44D; @elseif ($memberRating->rating == 5)"&#x3030; @else"&#x1F44E; @endif<strong>{{ $memberRating->username }}</strong> a donné la note de <strong class='red'>{{ $memberRating->rating }}</strong> à <em>{{ $anime->title }}</em>&nbsp;", 
             @endif
           @endforeach
         ],
@@ -69,5 +69,11 @@
         cursorChar: '❤️',
         loop: true});
     @endforeach
+
+    /* Explications Emojis
+        &#x1F44D; = 👍
+        &#x3030; = 〰️
+        &#x1F44E; = 👎
+    */
   </script>
 </x-layout>
