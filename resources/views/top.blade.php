@@ -5,7 +5,7 @@
 
   <article class="top">
     <header class="top--header">
-      <h1>Le top des animes des membres</h1>
+      <h1>&#x1F44D; Le top des animes des membres</h1>
     </header>
     <div class="top--form">
       <!-- On boucle sur les animés -->
@@ -43,7 +43,7 @@
                         <strong>{{ $i }}</strong>
                        notes pour cet anime.</p>
                        <!-- Là on affiche les notes "XXX à donné la note de YY à NomDeLanime" -->
-                      <p id="rating{{ $anime->anime_id }}" class="topRating"></p>
+                      <span id="rating{{ $anime->anime_id }}"></span>
                     </div>
                 </div>
             </div>
@@ -54,19 +54,20 @@
   <!-- Script pour l'animation du texte des ratings des tops -->
   <script>
     @foreach ($animes as $anime)
-      const ratings{{ $anime->anime_id }} = new AutoTyping({
-        id: 'rating{{ $anime->anime_id }}',
-        cursor: '⭐',
-        typeText: [ 
+      var ratings{{ $anime->anime_id }} = new Typed('#rating{{ $anime->anime_id }}',{
+        strings: [ 
           @foreach ($memberRatings as $memberRating)
             @if ($memberRating->anime_id === $anime->anime_id)
-              '{{ $memberRating->username }} a donné la note de {{ $memberRating->rating }} à {{ $anime->title }}', 
+              @if ($memberRating->rating > 5)
+                "👍 @elseif ($memberRating->rating == 5)"〰️ @else"👎 @endif<strong>{{ $memberRating->username }}</strong> a donné la note de <strong class='red'>{{ $memberRating->rating }}</strong> à <em>{{ $anime->title }}</em>&nbsp;", 
             @endif
           @endforeach
         ],
-        textColor: '#f00',
-        typeSpeed: 50}).init();
+        typeSpeed: 20,
+        backSpeed: 10,
+        backDelay: 1000,
+        cursorChar: '❤️',
+        loop: true});
     @endforeach
-  
   </script>
 </x-layout>
