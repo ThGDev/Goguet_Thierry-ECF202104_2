@@ -20,9 +20,9 @@ class topController extends Controller
         $memberRatings = DB::table('reviews')
                             ->join('users', 'reviews.user_id', '=', 'users.id')
                             ->select('rating', 'username', 'anime_id')
-                            ->groupBy('anime_id', 'username')
+                            ->groupBy('anime_id', 'username')                        
                             ->get();
-        // dd($memberRatings);
+        
         // Va nous servir dans la vue pour incrémenter le chiffre (pour écrire le numéro de classement de l'anime...)
         $rank = 1;
 

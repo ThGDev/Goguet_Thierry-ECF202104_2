@@ -321,12 +321,24 @@ input {
 li.rate-plus, li.rate-minor, li.rate-bof {
     list-style: none;
 }
-li.rate-plus::before {
+.rate-plus::before {
     content: "\1F44D";
 }
-li.rate-minor::before {
+.rate-minor::before {
     content: "\1F44E";
 }
-li.rate-bof::before {
+.rate-bof::before {
     content: "\3030";
+}
+
+.how-many-notes {
+    font-size: 0.8rem;
+    font-style: italic;
+    border-bottom: 1px dashed;
+    padding-bottom: 0.3rem;
+    margin-bottom: 0.3rem;
+    width: 60%;
+}
+.topRating {
+    font-weight: bold;
 }

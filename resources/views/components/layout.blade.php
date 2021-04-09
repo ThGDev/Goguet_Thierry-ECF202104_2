@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/app.css" />
+    <script src="/AutoTyping.min.js"></script>
   </head>
   <body>
     <header class="topnav">

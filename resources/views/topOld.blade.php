@@ -31,19 +31,24 @@
                     <div class="top--button">
                         <a class="cta" href="/anime/{{ $anime->anime_id }}" alt="voir la fiche" title="voir la fiche">Voir la fiche</a>
                     </div>
-                    <!-- Ici on affiche "il y a actuellement X notes pour cet anime" -->
                     <div>
-                      <p class="how-many-notes">Il y a actuellement 
-                      @php $i = 0 @endphp
+                        <ul>
+                        <!-- on boucle sur les notes moyennes -->
                         @foreach ($memberRatings as $memberRating)
+                          <!-- Petite condition pour afficher un icône selon la note -->
                           @if ($memberRating->anime_id === $anime->anime_id)
-                            @php $i++ @endphp
+                              @if($memberRating->rating > 5)
+                                  <li class="rate-plus">
+                              @elseif ($memberRating->rating == 5)
+                                  <li class="rate-bof">
+                              @else
+                                  <li class="rate-minor">
+                              @endif
+                                  <strong>{{ $memberRating->username }}</strong> a donné la note de <strong class="red">{{ $memberRating->rating }}</strong>
+                              </li>
                           @endif
                         @endforeach
-                        <strong>{{ $i }}</strong>
-                       notes pour cet anime.</p>
-                       <!-- Là on affiche les notes "XXX à donné la note de YY à NomDeLanime" -->
-                      <p id="rating{{ $anime->anime_id }}" class="topRating"></p>
+                        </ul>
                     </div>
                 </div>
             </div>
