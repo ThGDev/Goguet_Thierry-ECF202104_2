@@ -67,7 +67,19 @@
         backSpeed: 10,
         backDelay: 1000,
         cursorChar: '❤️',
-        loop: true});
+        @php $i = 0; @endphp
+        @foreach ($memberRatings as $memberRating)
+          @if ($memberRating->anime_id === $anime->anime_id)
+            @php $i++ @endphp
+            @if ($i > 1)
+              @php $looping = 'loop: true'; @endphp
+            @else
+              @php $looping = 'loop: false'; @endphp
+            @endif
+          @endif
+        @endforeach
+        {{ $looping }}
+        });
     @endforeach
 
     /* Explications Emojis
